@@ -111,7 +111,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header title="Mint Sacred Psychonaut" />
+        <Header title="Mint A Sacred Psychonaut" />
         {!currentAccount && <p className="description">
           <button onClick={connectWallet}>Connect Wallet</button>
         </p>}
