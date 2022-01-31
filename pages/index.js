@@ -73,7 +73,7 @@ export default function Home() {
 
        
 
-         let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{ gasLimit: 300000 });
+         let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount);
         console.log("Mining...", waveTxn.hash);
         mined(true)
         
@@ -84,7 +84,7 @@ export default function Home() {
         mined(false)
         
 
-        waveTxn = await wavePortalContract.walletOfOwner(currentAccount,{ gasLimit: 300000 });
+        waveTxn = await wavePortalContract.walletOfOwner(currentAccount);
         
        setMintedTokens(waveTxn)
 
