@@ -14,7 +14,7 @@ export default function Home() {
   const [openSeaUri, setOpenSeaUri] = useState('');
   const [mintedTokens, setMintedTokens] = useState([]);
   const [lastTransactionHash, setLastTransactionHash] = useState('');
-  const contractAddress = "0x1dFc767160d83Df329072599012faB39788b8a18";
+  const contractAddress = "0xab304e730dadcf0b4de86933496d074fa39b4037";
   const contractABI = abi;
 
   const checkIfWalletIsConnected = async () => {
