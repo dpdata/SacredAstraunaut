@@ -14,7 +14,7 @@ export default function Home() {
   const [openSeaUri, setOpenSeaUri] = useState('');
   const [mintedTokens, setMintedTokens] = useState([]);
   const [lastTransactionHash, setLastTransactionHash] = useState('');
-  const contractAddress = "0x8bc9c8B29D257302C36631bdf71fbc1733b75e88";
+  const contractAddress = "0x1dFc767160d83Df329072599012faB39788b8a18";
   const contractABI = abi;
 
   const checkIfWalletIsConnected = async () => {
@@ -72,25 +72,61 @@ export default function Home() {
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
 
        
-        let gasPrice = await provider.getGasPrice()
-       gasPrice = gasPrice.toNumber();
-       console.log(gasPrice)
+      //   let gasPrice = await provider.getGasPrice()
+      //  gasPrice = gasPrice.toNumber();
+      //  console.log(gasPrice)
         // let estimatedGasFee;            
     
-        // estimatedGasFee = await wavePortalContract.estimateGas.mint(currentAccount,mintAmount,{gasLimit:gasPrice})
+        // estimatedGasFee = await wavePortalContract.estimateGas.mint(currentAccount,mintAmount)
         //       estimatedGasFee = estimatedGasFee.toNumber();
         //       console.log('gas fees is'+estimatedGasFee)
 
+        let cost = await wavePortalContract.getCost();
+        let owner = await wavePortalContract.owner();
+console.log(owner)
+        // await wavePortalContract.add100PresaleUsers(['0x8b54a3D102Cbb5b4B1c1349c628ed909C0aEb206','0xf8906c655FDafDc5E39822fA8bB3fB8D04A1dc5A'])
+        if(currentAccount.toLowerCase() == owner.toLowerCase()){
+          console.log('current account')
+          let isPresale = await wavePortalContract.presaleWallets(currentAccount);
+          console.log(isPresale)
+          if(isPresale){
+           cost = await wavePortalContract.getPresaleCost();
+          }
+          console.log(cost)
+ 
+         // console.log(cost.toString())
+          let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount);
+         console.log("Mining...", waveTxn.hash);
+         mined(true)
+         
+         await waveTxn.wait();
+         console.log("Mined -- ", waveTxn.hash);
+         setLastTransactionHash(waveTxn.hash);
+         
+         mined(false)
+        }else{
+          let isPresale = await wavePortalContract.presaleWallets(currentAccount);
+          console.log(isPresale)
+          if(isPresale){
+           cost = await wavePortalContract.getPresaleCost();
+          }
+          console.log(cost)
 
-         let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{gasLimit:gasPrice});
-        console.log("Mining...", waveTxn.hash);
-        mined(true)
+          cost = cost*mintAmount;
+          console.log(cost)
+ 
+         // console.log(cost.toString())
+          let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{value: cost.toString()});
+         console.log("Mining...", waveTxn.hash);
+         mined(true)
+         
+         await waveTxn.wait();
+         console.log("Mined -- ", waveTxn.hash);
+         setLastTransactionHash(waveTxn.hash);
+         
+         mined(false)
+        }
         
-        await waveTxn.wait();
-        console.log("Mined -- ", waveTxn.hash);
-        setLastTransactionHash(waveTxn.hash);
-        
-        mined(false)
         
 
       //   waveTxn = await wavePortalContract.walletOfOwner(currentAccount);
