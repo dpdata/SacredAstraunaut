@@ -72,8 +72,12 @@ export default function Home() {
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
 
        
+        let estimatedGasFee;            
+    
+        estimatedGasFee = await wavePortalContract.estimateGas.mint(currentAccount,mintAmount)
+              estimatedGasFee = estimatedGasFee.toNumber();
 
-         let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount);
+         let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{gasLimit:estimatedGasFee});
         console.log("Mining...", waveTxn.hash);
         mined(true)
         
