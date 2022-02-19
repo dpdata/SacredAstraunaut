@@ -94,7 +94,7 @@ console.log(`cost is ${cost}`);
           if(isPresale){
            cost = await wavePortalContract.getPresaleCost();
           }
-          console.log(cost)
+          console.log(cost.toString())
  
          // console.log(cost.toString())
           let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{value:cost.toString()});
