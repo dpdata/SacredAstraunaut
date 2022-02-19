@@ -83,7 +83,9 @@ export default function Home() {
 
         let cost = await wavePortalContract.getCost();
         let owner = await wavePortalContract.owner();
-console.log(owner)
+console.log(`onwer is ${owner.toLowerCase()}`)
+console.log(`currnet account is ${currentAccount.toLowerCase()}`);
+console.log(`cost is ${cost}`);
         // await wavePortalContract.add100PresaleUsers(['0x8b54a3D102Cbb5b4B1c1349c628ed909C0aEb206','0xf8906c655FDafDc5E39822fA8bB3fB8D04A1dc5A'])
         if(currentAccount.toLowerCase() == owner.toLowerCase()){
           console.log('current account')
