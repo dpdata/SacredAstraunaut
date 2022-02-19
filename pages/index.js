@@ -83,20 +83,15 @@ export default function Home() {
 
         let cost = await wavePortalContract.getCost();
         let owner = await wavePortalContract.owner();
-console.log(`onwer is ${owner.toLowerCase()}`)
-console.log(`currnet account is ${currentAccount.toLowerCase()}`);
-console.log(`cost is ${cost}`);
         // await wavePortalContract.add100PresaleUsers(['0x8b54a3D102Cbb5b4B1c1349c628ed909C0aEb206','0xf8906c655FDafDc5E39822fA8bB3fB8D04A1dc5A'])
         if(currentAccount.toLowerCase() == owner.toLowerCase()){
           console.log('current account')
           let isPresale = await wavePortalContract.presaleWallets(currentAccount);
-          console.log(isPresale)
+     
           if(isPresale){
            cost = await wavePortalContract.getPresaleCost();
           }
-          console.log(cost.toString())
- 
-         // console.log(cost.toString())
+         
           let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount);
          console.log("Mining...", waveTxn.hash);
          mined(true)
@@ -140,7 +135,7 @@ console.log(`cost is ${cost}`);
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error.code)
     }
   }
 
