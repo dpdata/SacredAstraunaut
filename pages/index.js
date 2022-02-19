@@ -97,7 +97,7 @@ console.log(`cost is ${cost}`);
           console.log(cost.toString())
  
          // console.log(cost.toString())
-          let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount,{value:cost.toString()});
+          let waveTxn = await wavePortalContract.mint(currentAccount,mintAmount);
          console.log("Mining...", waveTxn.hash);
          mined(true)
          
