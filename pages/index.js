@@ -13,6 +13,7 @@ export default function Home() {
   const baseOpenseaUri = "https://opensea.io";
   const [openSeaUri, setOpenSeaUri] = useState('');
   const [mintedTokens, setMintedTokens] = useState([]);
+  const [error,setError] = useState('');
   const [lastTransactionHash, setLastTransactionHash] = useState('');
   const contractAddress = "0x83558D6Afd415a6e62984c7d9041eA4007C83A45";
   const contractABI = abi;
@@ -135,7 +136,7 @@ export default function Home() {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error.code)
+      setError(error.code)
     }
   }
 
@@ -165,6 +166,7 @@ export default function Home() {
         
         {mining && <div class="title">Mining...</div>}
         {lastTransactionHash && <div class="title">{lastTransactionHash}</div>}
+        {error && <div class="title">{error}</div>}
       </main>
 
       <Footer />
